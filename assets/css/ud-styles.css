@@ -1,12 +1,5 @@
 /* =======
 
-	Template Name: Play Bootstrap
-	Author: UIdeck
-	Author URI: https://uideck.com/
-	Support: https://github.com/uideck/
-	Version: 1.0
-
-======== */
 /*===========================
   COMMON css 
 ===========================*/
@@ -994,6 +987,18 @@ p {
   color: var(--white);
   background: var(--heading-color);
 
+}
+
+.selected-plan {
+  border: 2px solid #3056d3;
+  box-shadow: 0 0 24px rgba(48,86,211,0.15);
+  background: #f5f8ff;
+  z-index: 2;
+  position: relative;
+}
+.selected-plan .ud-popular-tag {
+  background: #3056d3;
+  color: #fff;
 }
 
 /* Efeito de hover nos cards */
