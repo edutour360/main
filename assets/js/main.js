@@ -15,7 +15,7 @@
 
     // === logo change
     if (ud_header.classList.contains("sticky")) {
-      logo.src = "assets/images/logo/logo-2.svg";
+      logo.src = "assets/images/logo/logo2.svg";
     } else {
       logo.src = "assets/images/logo/logo.svg";
     }
@@ -90,4 +90,35 @@
   document.querySelector(".back-to-top").onclick = () => {
     scrollTo(document.documentElement);
   };
+
+  // ===== Planos interativos: clique e hover nos cards =====
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const cards = document.querySelectorAll(".ud-single-pricing");
+
+    cards.forEach((card) => {
+      // Ao clicar no card inteiro (exceto botão), ativa visual azul
+      card.addEventListener("click", function () {
+        cards.forEach((c) => c.classList.remove("active-clicked"));
+        card.classList.add("active-clicked");
+      });
+
+      // Evita que o botão de compra dispare o clique no card
+      const btn = card.querySelector(".ud-pricing-footer a");
+      if (btn) {
+        btn.addEventListener("click", function (e) {
+          e.stopPropagation();
+        });
+      }
+
+      // Adiciona/remova a classe ao passar o mouse (hover)
+      card.addEventListener("mouseenter", function () {
+        card.classList.add("active-hover");
+      });
+
+      card.addEventListener("mouseleave", function () {
+        card.classList.remove("active-hover");
+      });
+    });
+  });
 })();

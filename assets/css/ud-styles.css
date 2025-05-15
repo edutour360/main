@@ -993,7 +993,69 @@ p {
 .ud-single-pricing .ud-white-btn:hover {
   color: var(--white);
   background: var(--heading-color);
+
 }
+
+/* Efeito de hover nos cards */
+.ud-single-pricing:hover {
+  border: 2px solid #0d6efd; /* azul padrão Bootstrap */
+  background-color: #f0f8ff;
+  box-shadow: 0 10px 20px rgba(13, 110, 253, 0.2);
+  transition: 0.3s;
+}
+
+/* Estado ativo ao clicar */
+.ud-single-pricing.active-clicked {
+  background-color: #0d6efd !important;
+  color: white;
+  border-color: #0d6efd;
+}
+
+.ud-single-pricing.active-clicked .ud-pricing-header h3,
+.ud-single-pricing.active-clicked .ud-pricing-header h4,
+.ud-single-pricing.active-clicked ul li {
+  color: white;
+}
+
+.ud-single-pricing.active-clicked .ud-pricing-footer a {
+  background-color: white;
+  color: #0d6efd;
+  border: 2px solid white;
+}
+
+.ud-single-pricing:hover {
+  border: 2px solid #007bff;
+  box-shadow: 0 0 25px rgba(0, 123, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.ud-single-pricing.active-clicked {
+  border: 2px solid #007bff;
+  background-color: #f0f8ff;
+  box-shadow: 0 0 25px rgba(0, 123, 255, 0.3);
+}
+
+/* Hover "ativo" para o card */
+.ud-single-pricing.hovered {
+  background-color: #0d6efd !important; /* azul */
+  color: white;
+  border-color: #0d6efd !important;
+  box-shadow: 0 0 25px rgba(13, 110, 253, 0.4);
+}
+
+.ud-single-pricing.hovered .ud-pricing-header h3,
+.ud-single-pricing.hovered .ud-pricing-header h4,
+.ud-single-pricing.hovered ul li {
+  color: white;
+}
+
+.ud-single-pricing.hovered .ud-pricing-footer a {
+  background-color: white;
+  color: #0d6efd;
+  border: 2px solid white;
+}
+
+
 
 /* ===== FAQ CSS ===== */
 .ud-faq {
