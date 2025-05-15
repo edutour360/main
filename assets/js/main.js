@@ -120,5 +120,13 @@
         card.classList.remove("active-hover");
       });
     });
+//Botão Veja mais//
+
+  const toggleBtn = document.getElementById("toggleIframeBtn");
+  toggleBtn.addEventListener("click", () => {
+    document.getElementById("tour360").scrollIntoView({ behavior: "smooth" });
+  });
+
+
   });
 })();
