@@ -117,10 +117,10 @@
               </div>
 
               <div class="navbar-btn d-none d-sm-inline-block">
-                <a href="login.html" class="ud-main-btn ud-login-btn">
+                <a href="signup.html" class="ud-main-btn ud-login-btn">
                   Entre
                 </a>
-                <a class="ud-main-btn ud-white-btn" href="javascript:void(0)">
+                <a class="ud-main-btn ud-white-btn" href="signup.html">
                   Cadastre-se
                 </a>
               </div>
@@ -140,7 +140,7 @@
           <div class="col-lg-12">
             <div class="ud-hero-content wow fadeInUp" data-wow-delay=".2s">
               <h1 class="ud-hero-title">
-               Apresente sua instituição de forma interativa e inovadora.
+               
               </h1>
               <p class="ud-hero-desc">
                  Ofereça uma experiência 360º imersiva para pais e alunos. <br> 
@@ -167,7 +167,7 @@
   <div style="width: 100%; max-width: 100vw; margin: 0 auto; border-radius: 10px; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.15);">
     <div style="position: relative; width: 100%; padding-bottom: 88%;">
       <iframe
-        src="https://kuula.co/share/collection/71q8L?logo=1&info=1&fs=1&vr=0&zoom=1&sd=1&thumbs=1"
+        src=''
         style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;"
         frameborder="0"
         allowfullscreen
@@ -183,20 +183,7 @@
         </div>
       </div>
     </section>
-<!-- ====== IFRAME TOGGLE SECTION ====== -->
-<div id="iframeContainer" style="display: none; padding: 40px 0; text-align: center;">
-  <div style="max-width: 960px; margin: 0 auto; aspect-ratio: 16 / 9; border-radius: 10px; overflow: hidden; box-shadow: 0 0 20px rgba(0,0,0,0.15);">
-    <iframe
-      src="https://kuula.co/share/collection/71q8L?logo=1&info=1&fs=1&vr=0&zoom=1&sd=1&thumbs=1"
-      width="100%"
-      height="100%"
-      frameborder="0"
-      allowfullscreen
-      loading="lazy"
-      style="border: none;">
-    </iframe>
-  </div>
-</div>
+
 
     <!-- ====== Hero End ====== -->
 
@@ -1147,10 +1134,10 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/main.js"></script>
+    <script src="assets/js/configurador.js"></script>
     <script>
       // ==== for menu scroll
       const pageLink = document.querySelectorAll(".ud-menu-scroll");
-
       pageLink.forEach((elem) => {
         elem.addEventListener("click", (e) => {
           e.preventDefault();
@@ -1187,27 +1174,12 @@
           }
         }
       }
-
       window.document.addEventListener("scroll", onScroll);
     </script>
 
 <script>
-  const toggleBtn = document.getElementById("toggleTourBtn");
-  const tourDiv = document.getElementById("tour360");
-
-  toggleBtn.addEventListener("click", () => {
-    const isVisible = tourDiv.style.display === "block";
-    tourDiv.style.display = isVisible ? "none" : "block";
-    toggleBtn.innerHTML = isVisible
-      ? 'Veja como funciona'
-      : 'Fechar Tour';
-  });
-</script>
-
-<script>
   // Seleciona todos os cards de planos
   const cards = document.querySelectorAll('.ud-single-pricing');
-
   cards.forEach(card => {
     card.addEventListener('click', function() {
       // Remove destaque de todos
@@ -1220,7 +1192,44 @@
   });
 </script>
 
+<!-- SDK do Supabase primeiro -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+<script>
+  window.supabaseUrl = 'https://xbrahrggojoqtmxogsbz.supabase.co';
+  window.supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicmFocmdnb2pvcXRteG9nc2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDczNTQ3NjIsImV4cCI6MjA2MjkzMDc2Mn0.VrBq_UNDTiUd8et6M60Wqy6E52iVuXrqaFEojzPZUB0';
+  window.supabase = supabase.createClient(window.supabaseUrl, window.supabaseKey);
+</script>
 
+<script>
+  async function carregarConteudoIndex() {
+    const { data, error } = await supabase
+      .from('cont_index')
+      .select('*')
+      .eq('id', 1)
+      .single();
 
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    document.querySelector(".ud-hero-title").innerText = data.Title_Index;
+    document.querySelector(".ud-hero-desc").innerHTML = data.Sub_title_index;
+
+    const botao = document.getElementById("toggleTourBtn");
+    botao.innerText = data.Button_Name;
+    botao.onclick = () => {
+      const tourDiv = document.getElementById("tour360");
+      const iframe = tourDiv.querySelector("iframe");
+      const isVisible = tourDiv.style.display === "block";
+      tourDiv.style.display = isVisible ? "none" : "block";
+      botao.innerText = isVisible ? 'Veja como funciona' : 'Fechar Tour';
+      if (!isVisible) {
+        iframe.src = data.Button_Iframe;
+      }
+    };
+  }
+  carregarConteudoIndex();
+</script>
   </body>
 </html>

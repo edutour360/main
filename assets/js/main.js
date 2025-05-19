@@ -45,7 +45,7 @@
   navbarToggler.addEventListener("click", function () {
     navbarToggler.classList.toggle("active");
     navbarCollapse.classList.toggle("show");
-  });
+  }); // <-- FECHA AQUI!
 
   // ===== submenu
   const submenuButton = document.querySelectorAll(".nav-item-has-children");
@@ -120,13 +120,73 @@
         card.classList.remove("active-hover");
       });
     });
-//Botão Veja mais//
-
-  const toggleBtn = document.getElementById("toggleIframeBtn");
-  toggleBtn.addEventListener("click", () => {
-    document.getElementById("tour360").scrollIntoView({ behavior: "smooth" });
+    //Botão Veja mais//
+    const toggleBtn = document.getElementById("toggleIframeBtn");
+    if (toggleBtn) {
+      toggleBtn.addEventListener("click", () => {
+        document.getElementById("tour360").scrollIntoView({ behavior: "smooth" });
+      });
+    }
   });
 
-
+  // ====== Header Auth Buttons ======
+  document.addEventListener('DOMContentLoaded', async () => {
+    if (!window.supabase) {
+      // Inicializa Supabase se não existir
+      const supabaseUrl = 'https://xbrahrggojoqtmxogsbz.supabase.co';
+      const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicmFocmdnb2pvcXRteG9nc2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDczNTQ3NjIsImV4cCI6MjA2MjkzMDc2Mn0.VrBq_UNDTiUd8et6M60Wqy6E52iVuXrqaFEojzPZUB0';
+      window.supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    }
+    const { data: { session } } = await window.supabase.auth.getSession();
+    const btnContainer = document.querySelector('.navbar-btn');
+    if (!btnContainer) return;
+    btnContainer.innerHTML = '';
+    if (session) {
+      // Logado: mostra Minha Conta e Sair
+      const contaBtn = document.createElement('a');
+      contaBtn.href = 'admin.html';
+      contaBtn.className = 'ud-main-btn ud-login-btn';
+      contaBtn.textContent = 'Minha Conta';
+      btnContainer.appendChild(contaBtn);
+      const sairBtn = document.createElement('a');
+      sairBtn.href = '#';
+      sairBtn.className = 'ud-main-btn ud-white-btn';
+      sairBtn.textContent = 'Sair';
+      sairBtn.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await window.supabase.auth.signOut();
+        window.location.href = 'login.html';
+      });
+      btnContainer.appendChild(sairBtn);
+    } else {
+      // Não logado: mostra Entre e Cadastre-se
+      const entreBtn = document.createElement('a');
+      entreBtn.href = 'login.html';
+      entreBtn.className = 'ud-main-btn ud-login-btn';
+      entreBtn.textContent = 'Entre';
+      btnContainer.appendChild(entreBtn);
+      const cadastreBtn = document.createElement('a');
+      cadastreBtn.href = 'signup.html';
+      cadastreBtn.className = 'ud-main-btn ud-white-btn';
+      cadastreBtn.textContent = 'Cadastre-se';
+      btnContainer.appendChild(cadastreBtn);
+    }
   });
-})();
+
+  document.addEventListener('DOMContentLoaded', function() {
+    const isIndex = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '';
+    const nav = document.getElementById('nav');
+    if (!nav) return;
+    const inicioLink = Array.from(nav.querySelectorAll('a')).find(a => a.textContent.trim() === 'Inicio');
+    if (!inicioLink) return;
+    if (!isIndex) {
+      inicioLink.classList.remove('ud-menu-scroll');
+      inicioLink.setAttribute('href', 'index.html');
+      inicioLink.onclick = null;
+    } else {
+      inicioLink.classList.add('ud-menu-scroll');
+      inicioLink.setAttribute('href', '#top');
+    }
+  });
+
+})(); // <-- FECHA A FUNÇÃO IIFE AQUI
