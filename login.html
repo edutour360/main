@@ -436,5 +436,55 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/wow.min.js"></script>
     <script src="assets/js/main.js"></script>
+
+
+<!-- Formulário de login - SUPABASE-->
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+const supabaseUrl = 'https://xbrahrggojoqtmxogsbz.supabase.co';
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhicmFocmdnb2pvcXRteG9nc2J6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDczNTQ3NjIsImV4cCI6MjA2MjkzMDc2Mn0.VrBq_UNDTiUd8et6M60Wqy6E52iVuXrqaFEojzPZUB0';
+  const supabase = createClient(supabaseUrl, supabaseKey);
+
+  const form = document.querySelector('.ud-login-form');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = form.email.value;
+    const password = form.password.value;
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+   if (error) {
+  document.getElementById('login-error').innerText = error.message;
+} else {
+  window.location.href = 'admin.html';
+}
+  });
+</script>
+
+
+
+<script>
+  document.getElementById("reset-password").addEventListener("click", async () => {
+    const email = prompt("Digite seu e-mail para redefinir a senha:");
+
+    if (email) {
+      const { data, error } = await supabase.auth.resetPasswordForEmail(email);
+
+      if (error) {
+        alert("Erro ao enviar e-mail de recuperação: " + error.message);
+      } else {
+        alert("Verifique seu e-mail para redefinir a senha.");
+      }
+    }
+  });
+</script>
+
+
+
   </body>
 </html>
