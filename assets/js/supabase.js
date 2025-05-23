@@ -85,3 +85,25 @@ async function loadPosts() {
 }
 window.onload = loadPosts;
 
+// Função para buscar o título do Hero
+export async function getHeroTitle() {
+  try {
+    const { data, error } = await supabase
+      .from('config')
+      .select('value')
+      .eq('key', 'hero_title')
+      .eq('site_id', window.SITE_ID)
+      .single();
+
+    if (error) {
+      console.error('Erro ao buscar o título do Hero:', error);
+      return null;
+    }
+
+    return data ? data.value : null;
+  } catch (err) {
+    console.error('Erro inesperado:', err);
+    return null;
+  }
+}
+

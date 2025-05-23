@@ -39,37 +39,53 @@ const heroTitle = document.getElementById('hero-title');
 const heroDesc = document.getElementById('hero-desc');
 const heroBtnText = document.getElementById('hero-btn-text');
 const heroBtnLink = document.getElementById('hero-btn-link');
+const heroTitleColor = document.getElementById('hero-title-color');
+const heroTitleSize = document.getElementById('hero-title-size');
+const heroTitleAlign = document.getElementById('hero-title-align');
 const heroSaveStatus = document.getElementById('hero-save-status');
 
-// Função para carregar dados do hero do Supabase
+// Carregar dados do hero
 async function loadHeroConfig() {
-  // Supondo tabela 'config' com chave 'hero_title', 'hero_desc', 'hero_btn_text', 'hero_btn_link'
   let { data, error } = await supabase
     .from('config')
     .select('key,value')
-    .in('key', ['hero_title','hero_desc','hero_btn_text','hero_btn_link']);
+    .eq('site_id', window.SITE_ID)
+    .in('key', [
+      'hero_title',
+      'hero_desc',
+      'hero_btn_text',
+      'hero_btn_link',
+      'text_title_color',
+      'text_title_size',
+      'text_title_align'
+    ]);
   if (data) {
     data.forEach(row => {
       if (row.key === 'hero_title') heroTitle.value = row.value;
       if (row.key === 'hero_desc') heroDesc.value = row.value;
       if (row.key === 'hero_btn_text') heroBtnText.value = row.value;
       if (row.key === 'hero_btn_link') heroBtnLink.value = row.value;
+      if (row.key === 'text_title_color') heroTitleColor.value = row.value;
+      if (row.key === 'text_title_size') heroTitleSize.value = row.value;
+      if (row.key === 'text_title_align') heroTitleAlign.value = row.value;
     });
   }
 }
-
-// Função para salvar dados do hero no Supabase
+// Salvar dados do hero
 async function saveHeroConfig(e) {
   e.preventDefault();
+  // Mostra status de salvamento para o usuário
   heroSaveStatus.textContent = 'Salvando...';
   const updates = [
-    { key: 'hero_title', value: heroTitle.value },
-    { key: 'hero_desc', value: heroDesc.value },
-    { key: 'hero_btn_text', value: heroBtnText.value },
-    { key: 'hero_btn_link', value: heroBtnLink.value }
+    { site_id: siteId, key: 'hero_title', value: heroTitle.value },
+    { site_id: siteId, key: 'hero_desc', value: heroDesc.value },
+    { site_id: siteId, key: 'hero_btn_text', value: heroBtnText.value },
+    { site_id: siteId, key: 'hero_btn_link', value: heroBtnLink.value },
+    { site_id: siteId, key: 'text_title_color', value: heroTitleColor.value },
+    { site_id: siteId, key: 'text_title_size', value: heroTitleSize.value },
+    { site_id: siteId, key: 'text_title_align', value: heroTitleAlign.value }
   ];
-  // UPSERT (atualiza ou insere)
-  const { error } = await supabase.from('config').upsert(updates, { onConflict: ['key'] });
+  const { error } = await supabase.from('config').upsert(updates, { onConflict: ['site_id', 'key'] });
   if (error) {
     heroSaveStatus.textContent = 'Erro ao salvar!';
   } else {

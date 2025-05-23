@@ -195,6 +195,9 @@ p {
 }
 
 /* ===== Header CSS ===== */
+
+
+
 .ud-header {
   position: absolute;
   top: 0;
@@ -240,7 +243,12 @@ p {
 }
 
 .navbar-brand img {
-  max-width: 160px;
+  max-height: 64px;   /* Limita a altura máxima */
+  width: auto;
+  height: auto;
+  border-radius: 8px; /* Ou 50% se quiser redonda */
+  object-fit: contain;
+  display: block;
 }
 
 .navbar-toggler {
@@ -1805,7 +1813,6 @@ p {
   margin: 10px;
   border-radius: 6px;
   color: var(--white);
-  font-size: 20px;
 }
 
 .ud-socials-connect ul li a.facebook {
@@ -2427,7 +2434,7 @@ p {
 }
 
 .ud-newsletter-box .ud-newsletter-form input::placeholder {
-  color: var(--white);
+  color: #b0b0b0;
   opacity: 1;
 }
 
@@ -2676,6 +2683,7 @@ p {
     font-size: 14px;
     padding: 10px 20px;
   }
+}
 
 /* Minhas adições */
 
@@ -2689,10 +2697,132 @@ p {
 }
 @media (max-width: 767px) {
   .ud-hero-title-full {
-    font-size: 7vw;
+             font-size: 7vw;
   }
 }
 
-/*# sourceMappingURL=ud-styles.css.map */
 
+.ud-contact-form-wrapper .hero-form,
+.ud-contact-form-wrapper .hero-form textarea {
+  display: block;
+  width: 100%;
+  padding: 15px 0;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #f1f1f1;
+  resize: none;
+}
+
+.ud-admin-form {
+  background: #fff;
+  border-radius: 10px;
+  padding: 32px 24px;
+  box-shadow: 0 2px 16px rgba(102, 98, 98, 0.06);
+  max-width: 600px;
+  margin: 0 auto 32px auto;
+}
+
+.ud-admin-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #2563eb;
+}
+
+.ud-admin-form input[type="text"],
+.ud-admin-form input[type="email"],
+.ud-admin-form input[type="password"],
+.ud-admin-form input[type="color"],
+.ud-admin-form textarea,
+.ud-admin-form select {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background: #f9fafb;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.ud-admin-form input:focus,
+.ud-admin-form textarea:focus,
+.ud-admin-form select:focus {
+  border-color: #2563eb;
+  outline: none;
+  background: #fff;
+}
+
+
+
+button .submitt {
+  background: #2563eb;
+  color: #392525;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+.ud-admin-form input[type="file"] {
+  background: none;
+  border: none;
+  margin-bottom: 18px;
+  padding: 0;
+}
+
+.ud-admin-form .form-section-title {
+  margin-top: 32px;
+  margin-bottom: 16px;
+  font-size: 1.2rem;
+  color: #0051ff;
+  font-weight: 700;
+}
+
+.upload-images-btn {   /* Estilo para o botão de upload */
+  background: #000000;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 28px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+}
+
+#logo-upload-form {
+   row-gap: 10px;
+   justify-content: center;
+    display: flex;
+    padding: auto;
+    margin-left: 200px;
+    margin-right: 20px;
+
+}
+
+#update-hero-all {
+  display: flex;
+  justify-content: center;
+  align-items: right;
+  margin-top: 20px;
+  color: #ffffff;
+}
+
+.supabase-update-section  {
+  
+  justify-content: center;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+
+#hero-mvp-form {
+ content: normal;
 }
